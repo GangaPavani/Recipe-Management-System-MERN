@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RecipeList from './components/RecipeList';
 import RecipeForm from './components/RecipeForm';
@@ -10,7 +10,8 @@ function App() {
   const dispatch = useDispatch();
   const recipes = useSelector((state) => state.recipes);
   const editingRecipe = useSelector((state) => state.editingRecipe);
-
+  const [editrecipe,seteditRecipe]=useState()
+ 
   const handleAddRecipe = (recipe) => {
     dispatch(addRecipe(recipe));
   };
@@ -26,16 +27,19 @@ function App() {
   const handleEditRecipe = (recipe) => {
     dispatch(updateRecipe(recipe));
   };
-
+const editRecipe = (data)=>{
+  seteditRecipe(data)
+}
   return (
     <div className="container">
       <h1 className="main-heading">Recipe Management System</h1>
       <div className="row">
         <div className="col">
         <RecipeForm 
-        editingRecipe={editingRecipe} 
+        editingRecipe={editrecipe} 
         addRecipe={handleAddRecipe}
         updateRecipe={handleUpdateRecipe} 
+
         />
         
         </div>
@@ -44,6 +48,8 @@ function App() {
             recipes={recipes}
             deleteRecipe={handleDeleteRecipe}
             setEditingRecipe={handleEditRecipe}
+        editRecipe={editRecipe} 
+
           />
         </div>
       </div>

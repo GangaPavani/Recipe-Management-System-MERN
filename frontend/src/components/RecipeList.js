@@ -2,7 +2,7 @@ import React from 'react';
 import { connect,useDispatch } from 'react-redux';
 import { deleteRecipe,  updateRecipe } from '../actions';
 
-const RecipeList = ({ recipes,deleteRecipe, updateRecipe }) => {
+const RecipeList = ({ recipes,deleteRecipe, updateRecipe,editRecipe }) => {
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
@@ -25,7 +25,7 @@ const RecipeList = ({ recipes,deleteRecipe, updateRecipe }) => {
               <h3 className="head">{recipe.name}</h3>
               <p className='para'>{recipe.ingredients}</p>
                <p className='para'>{recipe.description}</p>
-              <button className="buttonEdit" onClick={() => handleEdit(recipe)}>Edit</button>
+              <button className="buttonEdit" onClick={() => editRecipe(recipe)}>Edit</button>
               <button className="buttonDelete" onClick={() => handleDelete(recipe.id)}>Delete</button>
             </li>
           ))}

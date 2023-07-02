@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { addRecipe, updateRecipe } from '../actions';
 
-const RecipeForm = ({ editingRecipe }) => {
+const RecipeForm = ({ editingRecipe,editRecipe }) => {
   const dispatch = useDispatch();
 
 
   const [name, setName] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [description, setDescription] = useState('');
-
   useEffect(() => {
-    if (editingRecipe) {
+    if (editingRecipe && editingRecipe?.id) {
       setName(editingRecipe.name);
       setIngredients(editingRecipe.ingredients);
       setDescription(editingRecipe.description);
@@ -25,7 +24,7 @@ const RecipeForm = ({ editingRecipe }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (editingRecipe) {
+    if (editingRecipe?.id) {
       dispatch(updateRecipe({ ...editingRecipe, name,ingredients, description }));
     } else {
       const newRecipe = { id:new Date().getTime(),name, ingredients,description };
@@ -39,7 +38,7 @@ const RecipeForm = ({ editingRecipe }) => {
 
   return (
     <div>
-      <h2>{editingRecipe ? 'Edit Recipe' : 'Create Recipe'}</h2>
+      <h2>{editingRecipe?.id ? 'Edit Recipe' : 'Create Recipe'}</h2>
       <form onSubmit={handleSubmit}>
       <div className="form-group">
         <label className="form-label"  htmlFor="name">
@@ -75,7 +74,7 @@ const RecipeForm = ({ editingRecipe }) => {
           />
           </div>
         <div>
-        <button className="buttonAdd" type="submit">{editingRecipe ? 'Update' : 'Add'}</button>
+        <button className="buttonAdd" type="submit">{editingRecipe?.id ? 'Update' : 'Add'}</button>
         </div>
       </form>
     </div>
